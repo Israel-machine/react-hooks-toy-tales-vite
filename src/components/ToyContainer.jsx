@@ -16,10 +16,27 @@ function ToyContainer({ toys, setToys }) {
       })
       .catch((e) => console.log(e))
   }
+
+  const likeToy = (toyId, numOfLikes) => {
+    fetch(`http://localhost:3000/toys/${toyId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        likes: numOfLikes
+      })
+    })
+      .then(response => response.json())
+      .then(likedToy => {
+        console.log(likedToy)
+      })
+      .catch((e) => console.log(e))
+  }
   return (
     <div id="toy-collection">
       {toys.map((toy) =>
-        <ToyCard key={toy.id} name={toy.name} image={toy.image} likes={toy.likes} toyId={toy.id} donateToy={donateToy} />
+        <ToyCard key={toy.id} name={toy.name} image={toy.image} likes={toy.likes} toyId={toy.id} donateToy={donateToy} likeToy={likeToy} />
       )}
     </div>
   );
